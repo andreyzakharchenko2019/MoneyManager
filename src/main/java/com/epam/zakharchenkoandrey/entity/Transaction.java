@@ -1,11 +1,9 @@
 package com.epam.zakharchenkoandrey.entity;
 
-import java.util.Date;
-
 public class Transaction {
 
     private long id;
-    private long id_user;
+    private long idUser;
     private String date;
     private int category;
     private int price;
@@ -23,12 +21,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public long getId_user() {
-        return id_user;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
     public String getDate() {

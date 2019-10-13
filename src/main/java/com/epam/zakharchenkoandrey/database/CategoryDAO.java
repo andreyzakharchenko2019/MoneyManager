@@ -30,13 +30,10 @@ public class CategoryDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = con.prepareStatement(SHOW_CATEGORY_LIST_SQL_QUERY);
-            stmt.setLong(1, user.getId_user());
-            rs = stmt.executeQuery();
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_CATEGORY_LIST_SQL_QUERY)){
+            stmt.setLong(1, user.getIdUser());
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Category category = new Category();
@@ -45,19 +42,9 @@ public class CategoryDAO {
             }
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatement showListCategory", e);
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
 
         return categoryList;
@@ -67,32 +54,23 @@ public class CategoryDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
 
-        try {
-            stmt = con.prepareStatement(ADD_CATEGORY_SQL_QUERY);
-            stmt.setString(1, category.getName_category());
-            stmt.setLong(2, category.getId_user());
+        try (PreparedStatement stmt = con.prepareStatement(ADD_CATEGORY_SQL_QUERY)) {
+            stmt.setString(1, category.getNameCategory());
+            stmt.setLong(2, category.getIdUser());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
             LOGGER.error(e);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
     }
 
     private Category setParametersToCategory(Category category, ResultSet rs) throws SQLException {
         category.setId(rs.getInt(NAME_COLUMN_ID_IN_DATABASE));
-        category.setName_category(rs.getString(NAME_COLUMN_NAME_CATEGORY_IN_DATABASE));
-        category.setId_user(rs.getInt(NAME_COLUMN_ID_USER_IN_DATABASE));
+        category.setNameCategory(rs.getString(NAME_COLUMN_NAME_CATEGORY_IN_DATABASE));
+        category.setIdUser(rs.getInt(NAME_COLUMN_ID_USER_IN_DATABASE));
 
         return category;
     }

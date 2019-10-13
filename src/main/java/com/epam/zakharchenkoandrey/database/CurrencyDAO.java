@@ -17,7 +17,7 @@ public class CurrencyDAO {
     public static final String NAME_COLUMN_ID_IN_DATABASE = "id";
     public static final String NAME_COLUMN_NAME_CURRENCY_IN_DATABASE = "name_currency";
 
-    public static final Logger LOGGER = Logger.getLogger(CategoryDAO.class);
+    public static final Logger LOGGER = Logger.getLogger(CurrencyDAO.class);
 
     public List<Currency> currencyList () {
         List<Currency> currencyList = new ArrayList<Currency>();
@@ -25,33 +25,20 @@ public class CurrencyDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = con.prepareStatement(SHOW_CURRENCY_LIST_SQL_QUERY);
-            rs = stmt.executeQuery();
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_CURRENCY_LIST_SQL_QUERY)) {
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Currency currency = new Currency();
                 currency = setParametersToCurrency(currency, rs);
                 currencyList.add(currency);
             }
-
         } catch (SQLException e) {
-            LOGGER.error(e);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            LOGGER.error("PreparedStatement showListCurrency", e);
+        }
+        finally {
+            connectionPool.putBack(con);
         }
 
         return currencyList;
@@ -59,7 +46,7 @@ public class CurrencyDAO {
 
     private Currency setParametersToCurrency (Currency currency, ResultSet rs) throws SQLException {
         currency.setId(rs.getInt(NAME_COLUMN_ID_IN_DATABASE));
-        currency.setName_currency(rs.getString(NAME_COLUMN_NAME_CURRENCY_IN_DATABASE));
+        currency.setNameCurrency(rs.getString(NAME_COLUMN_NAME_CURRENCY_IN_DATABASE));
 
         return currency;
     }

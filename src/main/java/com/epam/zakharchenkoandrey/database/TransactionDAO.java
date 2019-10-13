@@ -42,13 +42,10 @@ public class TransactionDAO {
         List<Transaction> transactionList = new ArrayList<Transaction>();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = con.prepareStatement(SHOW_ALL_TRANSACTION_ONE_USER_SQL_QUERY);
-            stmt.setLong(1, user.getId_user());
-            rs = stmt.executeQuery();
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_ALL_TRANSACTION_ONE_USER_SQL_QUERY)) {
+            stmt.setLong(1, user.getIdUser());
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Transaction transaction = new Transaction();
@@ -57,19 +54,9 @@ public class TransactionDAO {
             }
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatement showTransactionList", e);
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
 
         return transactionList;
@@ -78,11 +65,9 @@ public class TransactionDAO {
     public void addTransaction(Transaction transaction) {
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
 
-        try {
-            stmt = con.prepareStatement(ADD_TRANSACTION_SQL_QUERY);
-            stmt.setLong(1, transaction.getId_user());
+        try (PreparedStatement stmt = con.prepareStatement(ADD_TRANSACTION_SQL_QUERY)) {
+            stmt.setLong(1, transaction.getIdUser());
             stmt.setString(2, transaction.getDate());
             stmt.setInt(3, transaction.getCategory());
             stmt.setInt(4, transaction.getPrice());
@@ -91,46 +76,29 @@ public class TransactionDAO {
             stmt.setInt(7, transaction.getTypeTransaction());
             stmt.executeUpdate();
 
-
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementAddTransaction", e);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
     }
 
     public void deleteTransaction(int id_transaction) {
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
 
-        try {
-            stmt = con.prepareStatement(DELETE_TRANSACTION_SQL_QUERY);
+        try (PreparedStatement stmt = con.prepareStatement(DELETE_TRANSACTION_SQL_QUERY)) {
             stmt.setLong(1, id_transaction);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementDeleteTransaction" ,e);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
     }
 
     private Transaction setParametersToTransactionForLabel(Transaction transaction, ResultSet rs) throws SQLException {
         transaction.setId(rs.getLong(NAME_COLUMN_ID_IN_DATABASE));
-        transaction.setId_user(rs.getLong(NAME_COLUMN_USER_ID_IN_DATABASE));
+        transaction.setIdUser(rs.getLong(NAME_COLUMN_USER_ID_IN_DATABASE));
         transaction.setDate(rs.getString(NAME_COLUMN_DATE_IN_DATABASE));
         transaction.setCategoryForLabel(rs.getString(NAME_COLUMN_CATEGORY_IN_DATABASE));
         transaction.setPrice(rs.getInt(NAME_COLUMN_PRICE_IN_DATABASE));

@@ -14,6 +14,7 @@ import java.util.List;
 public class CategoryListService implements Service {
 
     public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    public static final String AUTHORIZED_LIST_CATEGORY_ATTRIBUTE = "listCategory";
     public static final String LIST_CATEGORY_JSP = "listCategory.jsp";
 
     @Override
@@ -21,7 +22,7 @@ public class CategoryListService implements Service {
         CategoryDAO categoryDAO = new CategoryDAO();
         User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
         List<Category> listCategory = categoryDAO.categoryList(user);
-        request.getSession().setAttribute("listCategory", listCategory);
+        request.getSession().setAttribute(AUTHORIZED_LIST_CATEGORY_ATTRIBUTE, listCategory);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(LIST_CATEGORY_JSP);
         requestDispatcher.forward(request, response);

@@ -3,7 +3,7 @@ package com.epam.zakharchenkoandrey.entity;
 public class Currency {
 
     private int id;
-    private String name_currency;
+    private String nameCurrency;
 
     public int getId() {
         return id;
@@ -13,11 +13,11 @@ public class Currency {
         this.id = id;
     }
 
-    public String getName_currency() {
-        return name_currency;
+    public String getNameCurrency() {
+        return nameCurrency;
     }
 
-    public void setName_currency(String name_currency) {
-        this.name_currency = name_currency;
+    public void setNameCurrency(String nameCurrency) {
+        this.nameCurrency = nameCurrency;
     }
 }

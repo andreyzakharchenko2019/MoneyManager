@@ -2,7 +2,7 @@ package com.epam.zakharchenkoandrey.entity;
 
 public class User {
 
-    private long id_user;
+    private long idUser;
     private String name;
     private String eMail;
     private String password;
@@ -12,12 +12,12 @@ public class User {
 
     }
 
-    public long getId_user() {
-        return id_user;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {

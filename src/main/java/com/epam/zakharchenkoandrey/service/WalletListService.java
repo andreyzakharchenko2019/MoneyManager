@@ -14,6 +14,8 @@ import java.util.List;
 public class WalletListService implements Service {
 
     public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    public static final String AUTHORIZED_LIST_WALLET_ATTRIBUTE = "listWallet";
+    public static final String AUTHORIZED_LIST_CURRENCY_ATTRIBUTE = "listCurrency";
     public static final String LIST_WALLET_JSP = "listWallet.jsp";
     public static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
     public static final String USER_ISN_T_PREMIUM_VALUE = "true";
@@ -30,8 +32,8 @@ public class WalletListService implements Service {
             User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
             List<Wallet> listWallet = walletDAO.walletList(user);
             List<Currency> listCurrency = currencyDAO.currencyList();
-            request.getSession().setAttribute("listWallet", listWallet);
-            request.getSession().setAttribute("listCurrency", listCurrency);
+            request.getSession().setAttribute(AUTHORIZED_LIST_WALLET_ATTRIBUTE, listWallet);
+            request.getSession().setAttribute(AUTHORIZED_LIST_CURRENCY_ATTRIBUTE, listCurrency);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(LIST_WALLET_JSP);
             requestDispatcher.forward(request, response);

@@ -19,8 +19,8 @@ public class CategoryAddService implements Service {
         User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
 
         Category category = new Category();
-        category.setId_user(user.getId_user());
-        category.setName_category(request.getParameter(NAME_CATEGORY_PARAMETER));
+        category.setIdUser(user.getIdUser());
+        category.setNameCategory(request.getParameter(NAME_CATEGORY_PARAMETER));
 
         CategoryDAO categoryDAO = new CategoryDAO();
         categoryDAO.addCategory(category);

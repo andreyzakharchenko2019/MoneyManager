@@ -3,7 +3,7 @@ package com.epam.zakharchenkoandrey.entity;
 public class Wallet {
 
     private int id;
-    private String name_wallet;
+    private String nameWallet;
     private int currency;
     private String currencyForLabel;
     private long user_id;
@@ -17,12 +17,12 @@ public class Wallet {
         this.id = id;
     }
 
-    public String getName_wallet() {
-        return name_wallet;
+    public String getNameWallet() {
+        return nameWallet;
     }
 
-    public void setName_wallet(String name_wallet) {
-        this.name_wallet = name_wallet;
+    public void setNameWallet(String nameWallet) {
+        this.nameWallet = nameWallet;
     }
 
     public int getCurrency() {

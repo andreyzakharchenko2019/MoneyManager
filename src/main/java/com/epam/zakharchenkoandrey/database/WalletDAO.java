@@ -41,13 +41,10 @@ public class WalletDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = con.prepareStatement(SHOW_WALLET_LIST_SQL_QUERY);
-            stmt.setLong(1, user.getId_user());
-            rs = stmt.executeQuery();
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_WALLET_LIST_SQL_QUERY)) {
+            stmt.setLong(1, user.getIdUser());
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Wallet wallet = new Wallet();
@@ -56,19 +53,9 @@ public class WalletDAO {
             }
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementShowWalletList", e);
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
 
         return walletList;
@@ -78,27 +65,18 @@ public class WalletDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
 
-        try {
-            stmt = con.prepareStatement(ADD_WALLET_SQL_QUERY);
-            stmt.setString(1, wallet.getName_wallet());
+        try (PreparedStatement stmt = con.prepareStatement(ADD_WALLET_SQL_QUERY)) {
+            stmt.setString(1, wallet.getNameWallet());
             stmt.setInt(2, wallet.getCurrency());
             stmt.setLong(3, wallet.getUser_id());
             stmt.setInt(4, wallet.getAmount());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementAddWallet", e);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
     }
 
@@ -106,37 +84,30 @@ public class WalletDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
 
-        try {
+        String preparedStatment;
+        if (transaction.getTypeTransaction() == 0) {
+            preparedStatment = (CHANGE_MINUS_AMOUNT_SQL_QUERY);
+        }
+        else {
+            preparedStatment = CHANGE_PLUS_AMOUNT_SQL_QUERY;
+        }
 
-            if (transaction.getTypeTransaction() == 0) {
-                stmt = con.prepareStatement(CHANGE_MINUS_AMOUNT_SQL_QUERY);
-            }
-            else {
-                stmt = con.prepareStatement(CHANGE_PLUS_AMOUNT_SQL_QUERY);
-            }
+        try (PreparedStatement stmt = con.prepareStatement(preparedStatment)) {
             stmt.setInt(1, transaction.getPrice());
             stmt.setInt(2, transaction.getWallet());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementChangeWallet", e);
         } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+             connectionPool.putBack(con);
         }
     }
 
     private Wallet setParametersToWallet(Wallet wallet, ResultSet rs) throws SQLException {
         wallet.setId(rs.getInt(NAME_COLUMN_ID_IN_DATABASE));
-        wallet.setName_wallet(rs.getString(NAME_COLUMN_NAME_WALLET_IN_DATABASE));
+        wallet.setNameWallet(rs.getString(NAME_COLUMN_NAME_WALLET_IN_DATABASE));
         wallet.setCurrency(rs.getInt(NAME_COLUMN_CURRENCY_IN_DATABASE));
         wallet.setCurrencyForLabel(rs.getString(NAME_COLUMN_CURRENCY_FOR_LABEL_IN_DATABASE));
         wallet.setUser_id(rs.getLong(NAME_COLUMN_USE_ID_IN_DATABASE));

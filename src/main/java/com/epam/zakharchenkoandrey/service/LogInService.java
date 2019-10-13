@@ -2,6 +2,7 @@ package com.epam.zakharchenkoandrey.service;
 
 import com.epam.zakharchenkoandrey.database.UserDAO;
 import com.epam.zakharchenkoandrey.entity.User;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,8 @@ public class LogInService implements Service {
 
     private User user;
 
+    public static final Logger LOGGER = Logger.getLogger(LogInService.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String userLogin = request.getParameter(LOGIN_ATTRIBUTE);
@@ -31,6 +34,7 @@ public class LogInService implements Service {
 
             TransactionService transactionService = new TransactionService();
             transactionService.execute(request, response);
+            LOGGER.info("Current user: " + user.getIdUser() + " " + user.geteMail());
         } else {
             request.setAttribute(EXCEPTION, INCORRECT_LOGIN_OR_PASSWORD);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(INDEX_JSP);

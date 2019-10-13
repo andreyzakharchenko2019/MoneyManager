@@ -29,7 +29,7 @@ public class TransactionAddService implements Service {
 
         User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
         Transaction transaction = new Transaction();
-        transaction.setId_user(user.getId_user());
+        transaction.setIdUser(user.getIdUser());
         transaction.setPrice(Integer.parseInt(request.getParameter(AMOUNT_TRANSACTION_PARAMETER)));
         transaction.setTypeTransaction(Integer.parseInt(request.getParameter(TYPE_TRANSACTION_PARAMETER)));
         transaction.setCategory(Integer.parseInt(request.getParameter(CATEGORY_PARAMETER)));

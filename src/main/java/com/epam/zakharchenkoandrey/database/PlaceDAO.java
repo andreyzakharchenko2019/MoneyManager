@@ -25,13 +25,10 @@ public class PlaceDAO {
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-        Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        Connection con = connectionPool.retrieve();;
 
-        try {
-            stmt = con.prepareStatement(SHOW_PLACE_LIST_SQL_QUERY);
-            rs = stmt.executeQuery();
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_PLACE_LIST_SQL_QUERY)){
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Place place = new Place();
@@ -40,19 +37,9 @@ public class PlaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("PreparedStatement showPlaceList", e);
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
 
         return placeList;

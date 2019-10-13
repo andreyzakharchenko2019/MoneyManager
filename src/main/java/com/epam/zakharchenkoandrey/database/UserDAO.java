@@ -24,40 +24,26 @@ public class UserDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
 
-        try {
-            stmt = con.prepareStatement(SHOW_USER_BY_EMAIL_SQL_QUERY);
+        try (PreparedStatement stmt = con.prepareStatement(SHOW_USER_BY_EMAIL_SQL_QUERY)) {
             stmt.setString(1, userEmail);
-            rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 user = setParametersToUser(user, rs);
             }
 
         } catch (SQLException e) {
-            LOGGER.error(e);
+            LOGGER.error("PreparedStatementShowUserByEmail", e);
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-                connectionPool.putBack(con);
-            } catch (SQLException e) {
-                LOGGER.error(e);
-            }
+            connectionPool.putBack(con);
         }
-
         return user;
     }
 
     private User setParametersToUser(User user, ResultSet rs) throws SQLException {
 
-        user.setId_user(rs.getLong(NAME_COLUMN_ID_IN_DATABASE));
+        user.setIdUser(rs.getLong(NAME_COLUMN_ID_IN_DATABASE));
         user.seteMail(rs.getString(NAME_COLUMN_EMAIL_IN_DATABASE));
         user.setPassword(rs.getString(NAME_COLUMN_PASSWORD_IN_DATABASE));
         user.setName(rs.getString(NAME_COLUMN_NAME_IN_DATABASE));
