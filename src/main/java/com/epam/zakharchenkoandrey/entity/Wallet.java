@@ -6,7 +6,7 @@ public class Wallet {
     private String nameWallet;
     private int currency;
     private String currencyForLabel;
-    private long user_id;
+    private long userId;
     private int amount;
 
     public int getId() {
@@ -33,12 +33,12 @@ public class Wallet {
         this.currency = currency;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getAmount() {

@@ -1,5 +1,7 @@
 package com.epam.zakharchenkoandrey.filters;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -13,10 +15,12 @@ public class PremiumFilter implements Filter {
     public static final String USER_ISN_T_PREMIUM_VALUE = "true";
     public static final String USER_ISN_T_PREMIUM_VALUE_FALSE = "false";
 
+    public static final Logger LOGGER = Logger.getLogger(PremiumFilter.class);
+
 
     @Override
     public void init (FilterConfig filterConfig) {
-
+        LOGGER.info("Filter start.");
     }
 
     @Override

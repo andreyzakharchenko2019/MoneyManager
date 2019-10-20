@@ -2,6 +2,7 @@ package com.epam.zakharchenkoandrey.conroller;
 
 import com.epam.zakharchenkoandrey.service.Service;
 import com.epam.zakharchenkoandrey.service.ServiceFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,14 @@ import java.io.IOException;
 public class Servlet extends HttpServlet {
 
     public static final String PARAMETER = "action";
+
+    public static final Logger LOGGER = Logger.getLogger(Servlet.class);
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        LOGGER.info("Servlet start.");
+    }
 
     @Override
     protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {

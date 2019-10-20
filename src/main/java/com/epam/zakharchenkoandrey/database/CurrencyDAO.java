@@ -20,7 +20,7 @@ public class CurrencyDAO {
     public static final Logger LOGGER = Logger.getLogger(CurrencyDAO.class);
 
     public List<Currency> currencyList () {
-        List<Currency> currencyList = new ArrayList<Currency>();
+        List<Currency> currencyList = new ArrayList<>();
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 

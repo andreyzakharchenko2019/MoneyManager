@@ -39,7 +39,7 @@ public class TransactionDAO {
     public static final Logger LOGGER = Logger.getLogger(TransactionDAO.class);
 
     public List<Transaction> listTransaction(User user) {
-        List<Transaction> transactionList = new ArrayList<Transaction>();
+        List<Transaction> transactionList = new ArrayList<>();
 
         Connection con = connectionPool.retrieve();
 
@@ -83,11 +83,11 @@ public class TransactionDAO {
         }
     }
 
-    public void deleteTransaction(int id_transaction) {
+    public void deleteTransaction(int idTransaction) {
         Connection con = connectionPool.retrieve();
 
         try (PreparedStatement stmt = con.prepareStatement(DELETE_TRANSACTION_SQL_QUERY)) {
-            stmt.setLong(1, id_transaction);
+            stmt.setLong(1, idTransaction);
             stmt.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("PreparedStatementDeleteTransaction" ,e);

@@ -15,7 +15,7 @@ public class ServiceFactory {
     public static final String CATEGORY_LIST_ACTION = "categoryList";
     public static final String ADD_CATEGORY_ACTION = "addCategory";
 
-    private Map<String, Service> serviceMap = new HashMap<String, Service>();
+    private Map<String, Service> serviceMap = new HashMap<>();
 
     public ServiceFactory() {
         serviceMap.put(LOG_IN_ACTION, new LogInService());

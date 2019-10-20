@@ -11,21 +11,21 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
 
-    private final static String CONNECTION_PULL_BUNDLE = "database";
-    private final static String DEFAULT_LOCALE = "";
-    private final static String CONNECTION_PULL_DRIVER = "db.driver";
-    private final static String CONNECTION_PULL_URL = "db.url";
-    private final static String CONNECTION_PULL_USER = "db.user";
-    private final static String CONNECTION_PULL_PASSWORD = "db.password";
-    private final static String CONNECTION_PULL_SIZE = "db.poolsize";
-    private final static Locale LOCALE = new Locale(DEFAULT_LOCALE);
-    private final static ResourceBundle BUNDLE = ResourceBundle.getBundle(CONNECTION_PULL_BUNDLE, LOCALE);
-    private final static String DRIVER = BUNDLE.getString(CONNECTION_PULL_DRIVER);
-    private final static String URL = BUNDLE.getString(CONNECTION_PULL_URL);
-    private final static String USER = BUNDLE.getString(CONNECTION_PULL_USER);
-    private final static String PASSWORD = BUNDLE.getString(CONNECTION_PULL_PASSWORD);
+    private static final String CONNECTION_PULL_BUNDLE = "database";
+    private static final String DEFAULT_LOCALE = "";
+    private static final String CONNECTION_PULL_DRIVER = "db.driver";
+    private static final String CONNECTION_PULL_URL = "db.url";
+    private static final String CONNECTION_PULL_USER = "db.user";
+    private static final String CONNECTION_PULL_PASSWORD = "db.password";
+    private static final String CONNECTION_PULL_SIZE = "db.poolsize";
+    private static final Locale LOCALE = new Locale(DEFAULT_LOCALE);
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(CONNECTION_PULL_BUNDLE, LOCALE);
+    private static final String DRIVER = BUNDLE.getString(CONNECTION_PULL_DRIVER);
+    private static final String URL = BUNDLE.getString(CONNECTION_PULL_URL);
+    private static final String USER = BUNDLE.getString(CONNECTION_PULL_USER);
+    private static final String PASSWORD = BUNDLE.getString(CONNECTION_PULL_PASSWORD);
     private final int CONNECTIONS_COUNT = Integer.parseInt(BUNDLE.getString(CONNECTION_PULL_SIZE));
-    private BlockingQueue<Connection> CONNECTION_QUEUE = new ArrayBlockingQueue<Connection>(CONNECTIONS_COUNT);
+    private BlockingQueue<Connection> CONNECTION_QUEUE = new ArrayBlockingQueue<>(CONNECTIONS_COUNT);
     private static volatile ConnectionPool instance;
     public static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
 

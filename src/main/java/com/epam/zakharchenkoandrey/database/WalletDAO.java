@@ -36,7 +36,7 @@ public class WalletDAO {
     public static final Logger LOGGER = Logger.getLogger(WalletDAO.class);
 
     public List<Wallet> walletList (User user) {
-        List<Wallet> walletList = new ArrayList<Wallet>();
+        List<Wallet> walletList = new ArrayList<>();
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -69,7 +69,7 @@ public class WalletDAO {
         try (PreparedStatement stmt = con.prepareStatement(ADD_WALLET_SQL_QUERY)) {
             stmt.setString(1, wallet.getNameWallet());
             stmt.setInt(2, wallet.getCurrency());
-            stmt.setLong(3, wallet.getUser_id());
+            stmt.setLong(3, wallet.getUserId());
             stmt.setInt(4, wallet.getAmount());
             stmt.executeUpdate();
 
@@ -110,7 +110,7 @@ public class WalletDAO {
         wallet.setNameWallet(rs.getString(NAME_COLUMN_NAME_WALLET_IN_DATABASE));
         wallet.setCurrency(rs.getInt(NAME_COLUMN_CURRENCY_IN_DATABASE));
         wallet.setCurrencyForLabel(rs.getString(NAME_COLUMN_CURRENCY_FOR_LABEL_IN_DATABASE));
-        wallet.setUser_id(rs.getLong(NAME_COLUMN_USE_ID_IN_DATABASE));
+        wallet.setUserId(rs.getLong(NAME_COLUMN_USE_ID_IN_DATABASE));
         wallet.setAmount(rs.getInt(NAME_COLUMN_AMOUNT_IN_DATABASE));
 
         return wallet;

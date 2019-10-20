@@ -14,6 +14,7 @@ import java.util.List;
 public class TransactionService implements Service {
 
     public static final String TRANSACTION_LIST_ATTRIBUTE = "transactionAttribute";
+    public static final String CURRENT_USER_ATTRIBUTE = "currentUser";
     public static final String TRANSACTION_LIST_JSP = "listTransaction.jsp";
 
     @Override
@@ -22,7 +23,7 @@ public class TransactionService implements Service {
         List<Transaction> transactionList;
 
         TransactionDAO transactionDAO = new TransactionDAO();
-        User user = (User) request.getSession().getAttribute("currentUser");
+        User user = (User) request.getSession().getAttribute(CURRENT_USER_ATTRIBUTE);
         transactionList = transactionDAO.listTransaction(user);
 
         request.setAttribute(TRANSACTION_LIST_ATTRIBUTE, transactionList);

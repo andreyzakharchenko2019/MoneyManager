@@ -26,7 +26,7 @@ public class CategoryDAO {
     public static final Logger LOGGER = Logger.getLogger(CategoryDAO.class);
 
     public List<Category> categoryList (User user) {
-        List<Category> categoryList = new ArrayList<Category>();
+        List<Category> categoryList = new ArrayList<>();
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         Connection con = connectionPool.retrieve();

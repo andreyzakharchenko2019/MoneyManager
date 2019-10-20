@@ -47,9 +47,7 @@ public class LogInService implements Service {
         boolean isCheck = false;
         user = userDAO.getUserByEmail(login);
 
-        if (user.getPassword() == null) {
-            isCheck = false;
-        } else if (user.getPassword().equals(password)) {
+        if (user.getPassword() != null && user.getPassword().equals(password)) {
             isCheck = true;
         }
 
