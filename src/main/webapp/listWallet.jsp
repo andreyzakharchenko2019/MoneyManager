@@ -18,7 +18,7 @@
 					<c:forEach items="${listWallet}" var="listWallet" >
 						<tr>	
 							<td>						
-								<font color="green" face="Comic Sans MS">${listWallet.name_wallet}</font>
+								<font color="green" face="Comic Sans MS">${listWallet.nameWallet}</font>
 							</td>
 							<td>						
 								<font color="blue" face="Comic Sans MS">${listWallet.amount}</font>
@@ -40,7 +40,7 @@
 						<td>	
 							<select name="currency">
 								<c:forEach items="${listCurrency}" var="listCurrency">
-								<option value="${listCurrency.id}">${listCurrency.name_currency}</option>
+								<option value="${listCurrency.id}">${listCurrency.nameCurrency}</option>
 								</c:forEach>
 							</select>
 						</td>

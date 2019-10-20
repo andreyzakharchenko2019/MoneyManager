@@ -32,7 +32,7 @@
 				<td>
 					<select name="category">
 					<c:forEach items="${listCategory}" var="listCategory">
-					<option value="${listCategory.id}">${listCategory.name_category}</option>
+					<option value="${listCategory.id}">${listCategory.nameCategory}</option>
 					</c:forEach>
 					</select>
 				</td>
@@ -42,7 +42,7 @@
 				<td>
 				<select name="nameWallet">
 					<c:forEach items="${listWallet}" var="listWallet">
-					<option value="${listWallet.id}">${listWallet.name_wallet}</option>
+					<option value="${listWallet.id}">${listWallet.nameWallet}</option>
 					</c:forEach>
 				</select>
 				</td>

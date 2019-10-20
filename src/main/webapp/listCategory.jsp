@@ -18,7 +18,7 @@
 					<c:forEach items="${listCategory}" var="listCategory" >
 						<tr>	
 							<td>						
-								<font color="green" face="Comic Sans MS">${listCategory.name_category}</font>
+								<font color="green" face="Comic Sans MS">${listCategory.nameCategory}</font>
 							</td>
 							<td>
 							</td>
