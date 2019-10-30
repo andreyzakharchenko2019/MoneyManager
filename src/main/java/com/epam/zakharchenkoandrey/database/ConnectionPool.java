@@ -1,5 +1,6 @@
 package com.epam.zakharchenkoandrey.database;
 
+import com.epam.zakharchenkoandrey.exception.AddTransactionException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -27,19 +28,19 @@ public class ConnectionPool {
     private final int CONNECTIONS_COUNT = Integer.parseInt(BUNDLE.getString(CONNECTION_PULL_SIZE));
     private BlockingQueue<Connection> CONNECTION_QUEUE = new ArrayBlockingQueue<>(CONNECTIONS_COUNT);
     private static volatile ConnectionPool instance;
-    public static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
 
     private ConnectionPool() {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("ConnectionPoolDriver", e);
+            LOGGER.error("The exception was occurred when trying to load driver's class", e);
         }
         for (int i = 0; i < CONNECTIONS_COUNT; i++) {
             try {
                 CONNECTION_QUEUE.put(getConnection());
             } catch (InterruptedException e) {
-                LOGGER.error("ConnectionPoolQueue", e);
+                LOGGER.error("The exception was occurred when trying to put connections in ArrayBlockingQueue", e);
             }
         }
     }
@@ -60,7 +61,7 @@ public class ConnectionPool {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
-            LOGGER.error("DriverManager.getConnection", e);
+            LOGGER.error("The exception was occurred when trying to get connection", e);
         }
         return connection;
     }
@@ -70,17 +71,17 @@ public class ConnectionPool {
         try {
             connection = CONNECTION_QUEUE.take();
         } catch (InterruptedException e) {
-            LOGGER.error(e);
+            LOGGER.error("The exception was occurred when trying to take connection from ArrayBlockingQueue", e);
         }
         return connection;
     }
 
-    public void putBack (Connection connection)  {
+    public void putBack (Connection connection) {
         if (connection != null) {
             try {
                 CONNECTION_QUEUE.put(connection);
             } catch (InterruptedException e) {
-                LOGGER.error("ConnectionPoolPutBack", e);
+                LOGGER.error("The exception was occurred when trying to put the connection back to the connection pool", e);
             }
         }
     }

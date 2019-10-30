@@ -15,20 +15,14 @@
 	<fmt:setBundle basename = "local" var = "lang"/>
 	<div align="center">	
 					<table>
-					<c:forEach items="${listCategory}" var="listCategory" >
-						<tr>	
-							<td>						
-								<font color="green" face="Comic Sans MS">${listCategory.nameCategory}</font>
-							</td>
-							<td>
-							</td>
-						</tr>					
-					</c:forEach>
-						<tr>
-						<form action="servlet" method="get">
+					<tr>
+						<td>	
+							<a href="listTransaction.jsp"><fmt:message key = "key.back" bundle = "${lang}" /></a>
+						</td>
+						<form action="servlet" method="post">
 						<input type="hidden" name="action" value="addCategory" />
 						<td>	
-							<input type="text" name="nameCategory" value=<fmt:message key = "key.nameCategory" bundle = "${lang}" />>
+							<input type="text" name="nameCategory" required maxlength="30" value=<fmt:message key = "key.nameCategory" bundle = "${lang}" />>
 						</td>
 						<td>						
 							<input type="submit" name="addCategory" value=<fmt:message key = "key.addCategory" bundle = "${lang}"/> >
@@ -36,6 +30,17 @@
 						</form>
 														
 						</tr>
+					<c:forEach items="${listCategory}" var="listCategory" >
+						<tr>	
+							<td>
+							</td>
+							<td>						
+								<font color="green" face="Comic Sans MS">${listCategory.nameCategory}</font>
+							</td>
+							<td>
+							</td>
+						</tr>					
+					</c:forEach>						
 					</table>
 					
 				

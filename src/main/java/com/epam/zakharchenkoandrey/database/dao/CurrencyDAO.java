@@ -1,5 +1,6 @@
-package com.epam.zakharchenkoandrey.database;
+package com.epam.zakharchenkoandrey.database.dao;
 
+import com.epam.zakharchenkoandrey.database.ConnectionPool;
 import com.epam.zakharchenkoandrey.entity.Currency;
 import org.apache.log4j.Logger;
 
@@ -12,12 +13,12 @@ import java.util.List;
 
 public class CurrencyDAO {
 
-    public static final String SHOW_CURRENCY_LIST_SQL_QUERY = "select * from currency";
+    private static final String SHOW_CURRENCY_LIST_SQL_QUERY = "select * from currency";
 
-    public static final String NAME_COLUMN_ID_IN_DATABASE = "id";
-    public static final String NAME_COLUMN_NAME_CURRENCY_IN_DATABASE = "name_currency";
+    private static final String NAME_COLUMN_ID_IN_DATABASE = "id";
+    private static final String NAME_COLUMN_NAME_CURRENCY_IN_DATABASE = "name_currency";
 
-    public static final Logger LOGGER = Logger.getLogger(CurrencyDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(CurrencyDAO.class);
 
     public List<Currency> currencyList () {
         List<Currency> currencyList = new ArrayList<>();
@@ -31,11 +32,11 @@ public class CurrencyDAO {
 
             while (rs.next()) {
                 Currency currency = new Currency();
-                currency = setParametersToCurrency(currency, rs);
+                setParametersToCurrency(currency, rs);
                 currencyList.add(currency);
             }
         } catch (SQLException e) {
-            LOGGER.error("PreparedStatement showListCurrency", e);
+            LOGGER.error("The exception was occurred when trying to get ArrayList with all user's currencies", e);
         }
         finally {
             connectionPool.putBack(con);
@@ -44,10 +45,8 @@ public class CurrencyDAO {
         return currencyList;
     }
 
-    private Currency setParametersToCurrency (Currency currency, ResultSet rs) throws SQLException {
+    private void setParametersToCurrency (Currency currency, ResultSet rs) throws SQLException {
         currency.setId(rs.getInt(NAME_COLUMN_ID_IN_DATABASE));
         currency.setNameCurrency(rs.getString(NAME_COLUMN_NAME_CURRENCY_IN_DATABASE));
-
-        return currency;
     }
 }

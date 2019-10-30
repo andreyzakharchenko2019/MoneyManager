@@ -7,15 +7,15 @@ import java.io.IOException;
 
 public class PremiumFilter implements Filter {
 
-    public static final String PREMIUM_ATTRIBUTE = "premiumUser";
-    public static final String PARAMETER = "action";
-    public static final String WALLET_LIST_ACTION = "walletList";
-    public static final String PREMIUM_VALUE = "1";
-    public static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
-    public static final String USER_ISN_T_PREMIUM_VALUE = "true";
-    public static final String USER_ISN_T_PREMIUM_VALUE_FALSE = "false";
+    private static final String PREMIUM_ATTRIBUTE = "premiumUser";
+    private static final String PARAMETER = "action";
+    private static final String WALLET_LIST_ACTION = "walletList";
+    private static final String PREMIUM_VALUE = "1";
+    private static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
+    private static final String USER_ISN_T_PREMIUM_VALUE = "true";
+    private static final String USER_ISN_T_PREMIUM_VALUE_FALSE = "false";
 
-    public static final Logger LOGGER = Logger.getLogger(PremiumFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(PremiumFilter.class);
 
 
     @Override
@@ -25,6 +25,8 @@ public class PremiumFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        servletRequest.setCharacterEncoding("UTF-8");
 
         String serviceAction = servletRequest.getParameter(PARAMETER);
 

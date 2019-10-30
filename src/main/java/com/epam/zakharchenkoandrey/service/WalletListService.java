@@ -1,7 +1,7 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.CurrencyDAO;
-import com.epam.zakharchenkoandrey.database.WalletDAO;
+import com.epam.zakharchenkoandrey.database.dao.CurrencyDAO;
+import com.epam.zakharchenkoandrey.database.dao.WalletDAO;
 import com.epam.zakharchenkoandrey.entity.*;
 
 import javax.servlet.RequestDispatcher;
@@ -13,12 +13,12 @@ import java.util.List;
 
 public class WalletListService implements Service {
 
-    public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
-    public static final String AUTHORIZED_LIST_WALLET_ATTRIBUTE = "listWallet";
-    public static final String AUTHORIZED_LIST_CURRENCY_ATTRIBUTE = "listCurrency";
-    public static final String LIST_WALLET_JSP = "listWallet.jsp";
-    public static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
-    public static final String USER_ISN_T_PREMIUM_VALUE = "true";
+    private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    private static final String AUTHORIZED_LIST_WALLET_ATTRIBUTE = "listWallet";
+    private static final String AUTHORIZED_LIST_CURRENCY_ATTRIBUTE = "listCurrency";
+    private static final String LIST_WALLET_JSP = "listWallet.jsp";
+    private static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
+    private static final String USER_ISN_T_PREMIUM_VALUE = "true";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

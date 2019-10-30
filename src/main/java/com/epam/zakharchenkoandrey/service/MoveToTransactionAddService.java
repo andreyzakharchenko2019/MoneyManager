@@ -1,7 +1,7 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.CategoryDAO;
-import com.epam.zakharchenkoandrey.database.WalletDAO;
+import com.epam.zakharchenkoandrey.database.dao.CategoryDAO;
+import com.epam.zakharchenkoandrey.database.dao.WalletDAO;
 import com.epam.zakharchenkoandrey.entity.Category;
 import com.epam.zakharchenkoandrey.entity.User;
 import com.epam.zakharchenkoandrey.entity.Wallet;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public class MoveToTransactionAddService implements Service {
 
-    public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
-    public static final String LIST_WALLET_ATTRIBUTE = "listWallet";
-    public static final String LIST_CATEGORY_ATTRIBUTE = "listCategory";
-    public static final String TRANSACTION_ADD_JSP = "transactionAdd.jsp";
+    private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    private static final String LIST_WALLET_ATTRIBUTE = "listWallet";
+    private static final String LIST_CATEGORY_ATTRIBUTE = "listCategory";
+    private static final String TRANSACTION_ADD_JSP = "transactionAdd.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

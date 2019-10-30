@@ -1,6 +1,6 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.TransactionDAO;
+import com.epam.zakharchenkoandrey.database.dao.TransactionDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class TransactionDeleteService implements Service {
 
-    public static final String DELETE_TRANSACTION_PARAMETER = "deleteTransaction";
+    private static final String DELETE_TRANSACTION_PARAMETER = "deleteTransaction";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

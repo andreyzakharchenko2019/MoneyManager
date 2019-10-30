@@ -1,6 +1,6 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.UserDAO;
+import com.epam.zakharchenkoandrey.database.dao.UserDAO;
 import com.epam.zakharchenkoandrey.entity.User;
 import org.apache.log4j.Logger;
 
@@ -12,16 +12,16 @@ import java.io.IOException;
 
 public class LogInService implements Service {
 
-    public static final String LOGIN_ATTRIBUTE = "login";
-    public static final String PASSWORD_ATTRIBUTE = "password";
-    public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
-    public static final String EXCEPTION = "exception";
-    public static final String INCORRECT_LOGIN_OR_PASSWORD = "101";
-    public static final String INDEX_JSP = "index.jsp";
+    private static final String LOGIN_ATTRIBUTE = "login";
+    private static final String PASSWORD_ATTRIBUTE = "password";
+    private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    private static final String EXCEPTION = "exception";
+    private static final String INCORRECT_LOGIN_OR_PASSWORD = "101";
+    private static final String INDEX_JSP = "index.jsp";
 
     private User user;
 
-    public static final Logger LOGGER = Logger.getLogger(LogInService.class);
+    private static final Logger LOGGER = Logger.getLogger(LogInService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -42,15 +42,10 @@ public class LogInService implements Service {
         }
     }
 
-    private Boolean checkLoginAndPassword(String login, String password) {
+    private boolean checkLoginAndPassword(String login, String password) {
         UserDAO userDAO = new UserDAO();
-        boolean isCheck = false;
         user = userDAO.getUserByEmail(login);
 
-        if (user.getPassword() != null && user.getPassword().equals(password)) {
-            isCheck = true;
-        }
-
-        return isCheck;
+        return user.getPassword() != null && user.getPassword().equals(password);
     }
 }

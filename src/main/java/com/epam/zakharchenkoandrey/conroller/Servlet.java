@@ -1,5 +1,6 @@
 package com.epam.zakharchenkoandrey.conroller;
 
+import com.epam.zakharchenkoandrey.exception.AddTransactionException;
 import com.epam.zakharchenkoandrey.service.Service;
 import com.epam.zakharchenkoandrey.service.ServiceFactory;
 import org.apache.log4j.Logger;
@@ -12,9 +13,9 @@ import java.io.IOException;
 
 public class Servlet extends HttpServlet {
 
-    public static final String PARAMETER = "action";
+    private static final String PARAMETER = "action";
 
-    public static final Logger LOGGER = Logger.getLogger(Servlet.class);
+    private static final Logger LOGGER = Logger.getLogger(Servlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -24,10 +25,13 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-
         String serviceAction = httpServletRequest.getParameter(PARAMETER);
         ServiceFactory factory = new ServiceFactory();
         Service service = factory.getService(serviceAction);
-        service.execute(httpServletRequest, httpServletResponse);
+        try {
+            service.execute(httpServletRequest, httpServletResponse);
+        } catch (AddTransactionException e) {
+            LOGGER.error("The exception was occurred when trying to add transaction and change wallet's amount", e);
+        }
     }
 }

@@ -23,6 +23,11 @@
 						<c:if test = "${userIsnTPremium == true}">
 							<fmt:message key = "key.notPremium" bundle = "${lang}"/>
 						</c:if>
+					<br>
+					<form action="servlet" method="get">
+						<input type="hidden" name="action" value="logOut" />
+						<input type="submit" name="logOut" value=<fmt:message key = "key.logOut" bundle = "${lang}"/> >
+					</form>				
 				</td>
 				<td>
 				<form action="servlet" method="get">

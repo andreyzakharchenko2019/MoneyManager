@@ -5,34 +5,34 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-  <servlet>
-    <servlet-name>Servlet</servlet-name>
-    <servlet-class>com.epam.zakharchenkoandrey.conroller.Servlet</servlet-class>
-  </servlet> 
-  
-  <servlet-mapping>
-    <servlet-name>Servlet</servlet-name>
-    <url-pattern>/servlet</url-pattern>
-  </servlet-mapping>
-  
-  <filter>
-	<filter-name>PremiumFilter</filter-name>
-	<filter-class>com.epam.zakharchenkoandrey.filters.PremiumFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-  </filter>
-    
-  <filter-mapping>
-    <filter-name>PremiumFilter</filter-name>
-    <servlet-name>Servlet</servlet-name>
-  </filter-mapping>
-  
+    <servlet>
+        <servlet-name>Servlet</servlet-name>
+        <servlet-class>com.epam.zakharchenkoandrey.conroller.Servlet</servlet-class>
+    </servlet>
 
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>Servlet</servlet-name>
+        <url-pattern>/servlet</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>PremiumFilter</filter-name>
+        <filter-class>com.epam.zakharchenkoandrey.filters.PremiumFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>PremiumFilter</filter-name>
+        <servlet-name>Servlet</servlet-name>
+    </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
 
 
 </web-app>

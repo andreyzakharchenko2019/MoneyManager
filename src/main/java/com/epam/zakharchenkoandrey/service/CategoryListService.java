@@ -1,6 +1,6 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.CategoryDAO;
+import com.epam.zakharchenkoandrey.database.dao.CategoryDAO;
 import com.epam.zakharchenkoandrey.entity.Category;
 import com.epam.zakharchenkoandrey.entity.User;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class CategoryListService implements Service {
 
-    public static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
-    public static final String AUTHORIZED_LIST_CATEGORY_ATTRIBUTE = "listCategory";
-    public static final String LIST_CATEGORY_JSP = "listCategory.jsp";
+    private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
+    private static final String AUTHORIZED_LIST_CATEGORY_ATTRIBUTE = "listCategory";
+    private static final String LIST_CATEGORY_JSP = "listCategory.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

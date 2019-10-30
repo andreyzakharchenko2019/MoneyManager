@@ -1,6 +1,6 @@
 package com.epam.zakharchenkoandrey.service;
 
-import com.epam.zakharchenkoandrey.database.TransactionDAO;
+import com.epam.zakharchenkoandrey.database.dao.TransactionDAO;
 import com.epam.zakharchenkoandrey.entity.Transaction;
 import com.epam.zakharchenkoandrey.entity.User;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class TransactionService implements Service {
 
-    public static final String TRANSACTION_LIST_ATTRIBUTE = "transactionAttribute";
-    public static final String CURRENT_USER_ATTRIBUTE = "currentUser";
-    public static final String TRANSACTION_LIST_JSP = "listTransaction.jsp";
+    private static final String TRANSACTION_LIST_ATTRIBUTE = "transactionAttribute";
+    private static final String CURRENT_USER_ATTRIBUTE = "currentUser";
+    private static final String TRANSACTION_LIST_JSP = "listTransaction.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -26,7 +26,7 @@ public class TransactionService implements Service {
         User user = (User) request.getSession().getAttribute(CURRENT_USER_ATTRIBUTE);
         transactionList = transactionDAO.listTransaction(user);
 
-        request.setAttribute(TRANSACTION_LIST_ATTRIBUTE, transactionList);
+        request.getSession().setAttribute(TRANSACTION_LIST_ATTRIBUTE, transactionList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(TRANSACTION_LIST_JSP);
         requestDispatcher.forward(request, response);
     }

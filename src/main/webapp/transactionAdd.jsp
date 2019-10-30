@@ -14,12 +14,15 @@
 	<fmt:setLocale value = "${locale}"/>
 	<fmt:setBundle basename = "local" var = "lang"/>
 	<div align="center">
-	<form action="servlet" method="get">
+	<form action="servlet" method="post">
 	<input type="hidden" name="action" value="addTransaction" />
 	<table>
-			<tr> 				
+			<tr>
+				<td>	
+					<a href="listTransaction.jsp"><fmt:message key = "key.back" bundle = "${lang}" /></a>
+				</td>			
 				<td><label for ="amountTransaction"><fmt:message key = "key.amount" bundle = "${lang}" /></label></td>				
-				<td><input id ="amountTransaction" type="text" name="amountTransaction" required pattern="^[ 0-9]+$"></td>
+				<td><input id ="amountTransaction" type="number" name="amountTransaction" min="1" max="99999999" required></td>
 				<td>				
 					<select name="typeTransaction">
 						<option value="0"><fmt:message key = "key.expense" bundle = "${lang}" /></option>
@@ -28,6 +31,8 @@
 				</td>				
 			</tr>
 			<tr>
+				<td>
+				</td>
 				<td><label><fmt:message key = "key.category" bundle = "${lang}" /></label></td>
 				<td>
 					<select name="category">
@@ -38,6 +43,8 @@
 				</td>
 			</tr>
 			<tr>
+				<td>
+				</td>
 				<td><label><fmt:message key = "key.wallet" bundle = "${lang}" /></label></td>
 				<td>
 				<select name="nameWallet">
@@ -48,14 +55,20 @@
 				</td>
 			</tr>
 			<tr>
+				<td>
+				</td>
 				<td><label><fmt:message key = "key.date" bundle = "${lang}" /></label></td>
 				<td><input type="date" name="dateParam"></td>
 			</tr>			
 			<tr>
+				<td>
+				</td>
 				<td><label><fmt:message key = "key.description" bundle = "${lang}" /></label></td>
-				<td><textarea name="comment" cols="20" rows="2"></textarea></td>
+				<td><textarea name="comment" cols="20" rows="2" maxlength="50"></textarea></td>
 			</tr>
 			<tr>
+			<td>
+			</td>
 			<td></td><td><input type="submit" name="addTransaction" value=<fmt:message key = "key.transactionAdd" bundle = "${lang}"/> ></td>
 			</tr>
 					
