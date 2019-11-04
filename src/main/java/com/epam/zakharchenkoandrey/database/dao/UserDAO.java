@@ -28,12 +28,12 @@ public class UserDAO {
 
         try (PreparedStatement stmt = con.prepareStatement(SHOW_USER_BY_EMAIL_SQL_QUERY)) {
             stmt.setString(1, userEmail);
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                setParametersToUser(user, rs);
+                while (rs.next()) {
+                    setParametersToUser(user, rs);
+                }
             }
-
         } catch (SQLException e) {
             LOGGER.error("The exception was occurred when trying to get user", e);
         } finally {

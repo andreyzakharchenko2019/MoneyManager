@@ -13,14 +13,17 @@
 
 	<fmt:setLocale value = "${locale}"/>
 	<fmt:setBundle basename = "local" var = "lang"/>
-	<div align="center">
-	<form action="servlet" method="post">
-	<input type="hidden" name="action" value="addTransaction" />
+	<div align="center">	
 	<table>
 			<tr>
 				<td>	
-					<a href="listTransaction.jsp"><fmt:message key = "key.back" bundle = "${lang}" /></a>
-				</td>			
+					<form action="servlet" method="post">
+					<input type="hidden" name="action" value="goToBack" />
+					<input type="submit" name="goToBack" value=<fmt:message key = "key.back" bundle = "${lang}"/> >
+					</form>
+				</td>
+			<form action="servlet" method="post">
+			<input type="hidden" name="action" value="addTransaction" />				
 				<td><label for ="amountTransaction"><fmt:message key = "key.amount" bundle = "${lang}" /></label></td>				
 				<td><input id ="amountTransaction" type="number" name="amountTransaction" min="1" max="99999999" required></td>
 				<td>				

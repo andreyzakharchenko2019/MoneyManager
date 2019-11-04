@@ -15,14 +15,14 @@ public class CategoryListService implements Service {
 
     private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
     private static final String AUTHORIZED_LIST_CATEGORY_ATTRIBUTE = "listCategory";
-    private static final String LIST_CATEGORY_JSP = "listCategory.jsp";
+    private static final String LIST_CATEGORY_JSP = "WEB-INF/listCategory.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         CategoryDAO categoryDAO = new CategoryDAO();
         User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
         List<Category> listCategory = categoryDAO.categoryList(user);
-        request.getSession().setAttribute(AUTHORIZED_LIST_CATEGORY_ATTRIBUTE, listCategory);
+        request.setAttribute(AUTHORIZED_LIST_CATEGORY_ATTRIBUTE, listCategory);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(LIST_CATEGORY_JSP);
         requestDispatcher.forward(request, response);

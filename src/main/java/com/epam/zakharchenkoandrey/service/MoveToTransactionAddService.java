@@ -18,7 +18,7 @@ public class MoveToTransactionAddService implements Service {
     private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
     private static final String LIST_WALLET_ATTRIBUTE = "listWallet";
     private static final String LIST_CATEGORY_ATTRIBUTE = "listCategory";
-    private static final String TRANSACTION_ADD_JSP = "transactionAdd.jsp";
+    private static final String TRANSACTION_ADD_JSP = "/WEB-INF/transactionAdd.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -28,8 +28,8 @@ public class MoveToTransactionAddService implements Service {
         User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
         List<Wallet> listWallet = walletDAO.walletList(user);
         List<Category> listCategory = categoryDAO.categoryList(user);
-        request.getSession().setAttribute(LIST_WALLET_ATTRIBUTE, listWallet);
-        request.getSession().setAttribute(LIST_CATEGORY_ATTRIBUTE, listCategory);
+        request.setAttribute(LIST_WALLET_ATTRIBUTE, listWallet);
+        request.setAttribute(LIST_CATEGORY_ATTRIBUTE, listCategory);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(TRANSACTION_ADD_JSP);
         requestDispatcher.forward(request, response);

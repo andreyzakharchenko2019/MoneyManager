@@ -15,7 +15,7 @@ public class TransactionService implements Service {
 
     private static final String TRANSACTION_LIST_ATTRIBUTE = "transactionAttribute";
     private static final String CURRENT_USER_ATTRIBUTE = "currentUser";
-    private static final String TRANSACTION_LIST_JSP = "listTransaction.jsp";
+    private static final String TRANSACTION_LIST_JSP = "/WEB-INF/listTransaction.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

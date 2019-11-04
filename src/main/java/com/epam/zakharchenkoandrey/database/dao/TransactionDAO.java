@@ -46,14 +46,13 @@ public class TransactionDAO {
 
         try (PreparedStatement stmt = con.prepareStatement(SHOW_ALL_TRANSACTION_ONE_USER_SQL_QUERY)) {
             stmt.setLong(1, user.getIdUser());
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Transaction transaction = new Transaction();
-                setParametersToTransactionForLabel(transaction, rs);
-                transactionList.add(transaction);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Transaction transaction = new Transaction();
+                    setParametersToTransactionForLabel(transaction, rs);
+                    transactionList.add(transaction);
+                }
             }
-
         } catch (SQLException e) {
             LOGGER.error("The exception was occurred when trying to get ArrayList with all user's transactions", e);
         } finally {
@@ -63,7 +62,7 @@ public class TransactionDAO {
         return transactionList;
     }
 
-    public void addTransaction(Transaction transaction, Connection con) {
+    public void addTransaction(Transaction transaction, Connection con) throws SQLException {
 
         try (PreparedStatement stmt = con.prepareStatement(ADD_TRANSACTION_SQL_QUERY)) {
             stmt.setLong(1, transaction.getIdUser());
@@ -74,9 +73,6 @@ public class TransactionDAO {
             stmt.setString(6, transaction.getDescription());
             stmt.setInt(7, transaction.getTypeTransaction());
             stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            LOGGER.error("The exception was occurred when trying to add transaction", e);
         }
     }
 

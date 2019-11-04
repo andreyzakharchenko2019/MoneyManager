@@ -15,6 +15,7 @@ public class ServiceFactory {
     private static final String CATEGORY_LIST_ACTION = "categoryList";
     private static final String ADD_CATEGORY_ACTION = "addCategory";
     private static final String LOG_OUT_ACTION = "logOut";
+    private static final String GO_TO_BACK_ACTION = "goToBack";
 
     private Map<String, Service> serviceMap = new HashMap<>();
 
@@ -29,6 +30,7 @@ public class ServiceFactory {
         serviceMap.put(CATEGORY_LIST_ACTION, new CategoryListService());
         serviceMap.put(ADD_CATEGORY_ACTION, new CategoryAddService());
         serviceMap.put(LOG_OUT_ACTION, new LogOutService());
+        serviceMap.put(GO_TO_BACK_ACTION, new GoToBackService());
     }
 
     public Service getService(String serviceAction) {

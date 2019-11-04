@@ -46,14 +46,13 @@ public class WalletDAO {
 
         try (PreparedStatement stmt = con.prepareStatement(SHOW_WALLET_LIST_SQL_QUERY)) {
             stmt.setLong(1, user.getIdUser());
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Wallet wallet = new Wallet();
-                setParametersToWallet(wallet, rs);
-                walletList.add(wallet);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Wallet wallet = new Wallet();
+                    setParametersToWallet(wallet, rs);
+                    walletList.add(wallet);
+                }
             }
-
         } catch (SQLException e) {
             LOGGER.error("The exception was occurred when trying to get ArrayList with user's wallet", e);
         } finally {
@@ -82,7 +81,7 @@ public class WalletDAO {
         }
     }
 
-    public void changeAmount (Transaction transaction, Connection con) {
+    public void changeAmount (Transaction transaction, Connection con) throws SQLException {
         String preparedStatement;
         if (transaction.getTypeTransaction() == 0) {
             preparedStatement = (CHANGE_MINUS_AMOUNT_SQL_QUERY);
@@ -95,9 +94,6 @@ public class WalletDAO {
             stmt.setInt(1, transaction.getPrice());
             stmt.setInt(2, transaction.getWallet());
             stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            LOGGER.error("The exception was occurred when trying to change wallet's amount", e);
         }
     }
 

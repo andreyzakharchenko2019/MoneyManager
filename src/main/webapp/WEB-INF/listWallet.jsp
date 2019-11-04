@@ -17,7 +17,10 @@
 					<table>
 					<tr>
 						<td>	
-							<a href="listTransaction.jsp"><fmt:message key = "key.back" bundle = "${lang}" /></a>
+							<form action="servlet" method="post">
+							<input type="hidden" name="action" value="goToBack" />
+							<input type="submit" name="goToBack" value=<fmt:message key = "key.back" bundle = "${lang}"/> >
+							</form>
 						</td>
 						<form action="servlet" method="post">
 						<input type="hidden" name="action" value="addWallet" />

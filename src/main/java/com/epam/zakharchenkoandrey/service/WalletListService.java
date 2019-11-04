@@ -16,7 +16,7 @@ public class WalletListService implements Service {
     private static final String AUTHORIZED_USER_ATTRIBUTE = "currentUser";
     private static final String AUTHORIZED_LIST_WALLET_ATTRIBUTE = "listWallet";
     private static final String AUTHORIZED_LIST_CURRENCY_ATTRIBUTE = "listCurrency";
-    private static final String LIST_WALLET_JSP = "listWallet.jsp";
+    private static final String LIST_WALLET_JSP = "/WEB-INF/listWallet.jsp";
     private static final String USER_ISN_T_PREMIUM = "userIsnTPremium";
     private static final String USER_ISN_T_PREMIUM_VALUE = "true";
 
@@ -32,8 +32,8 @@ public class WalletListService implements Service {
             User user = (User) request.getSession().getAttribute(AUTHORIZED_USER_ATTRIBUTE);
             List<Wallet> listWallet = walletDAO.walletList(user);
             List<Currency> listCurrency = currencyDAO.currencyList();
-            request.getSession().setAttribute(AUTHORIZED_LIST_WALLET_ATTRIBUTE, listWallet);
-            request.getSession().setAttribute(AUTHORIZED_LIST_CURRENCY_ATTRIBUTE, listCurrency);
+            request.setAttribute(AUTHORIZED_LIST_WALLET_ATTRIBUTE, listWallet);
+            request.setAttribute(AUTHORIZED_LIST_CURRENCY_ATTRIBUTE, listCurrency);
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(LIST_WALLET_JSP);
             requestDispatcher.forward(request, response);

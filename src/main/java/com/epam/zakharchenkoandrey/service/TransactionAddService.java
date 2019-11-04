@@ -6,12 +6,14 @@ import com.epam.zakharchenkoandrey.database.dao.WalletDAO;
 import com.epam.zakharchenkoandrey.entity.Transaction;
 import com.epam.zakharchenkoandrey.entity.User;
 import com.epam.zakharchenkoandrey.exception.AddTransactionException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -30,6 +32,8 @@ public class TransactionAddService implements Service {
 
     private User user;
 
+    private static final Logger LOGGER = Logger.getLogger(TransactionAddService.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
             ServletException, AddTransactionException {
@@ -40,16 +44,32 @@ public class TransactionAddService implements Service {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection con = connectionPool.retrieve();
 
+
         try {
+            con.setAutoCommit(false);
             TransactionDAO transactionDAO = new TransactionDAO();
             transactionDAO.addTransaction(transaction, con);
 
             WalletDAO walletDAO = new WalletDAO();
             walletDAO.changeAmount(transaction, con);
 
-        } catch (Exception e) {
+            con.commit();
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                LOGGER.error("The exception was occurred when trying to rollback transaction - add transaction " +
+                        "and change wallet's amount", e);
+            }
+            LOGGER.error("The exception was occurred when trying to add transaction and change wallet's amount", e);
             throw new AddTransactionException(e);
         } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                LOGGER.error("The exception was occurred when trying to set auto commit transaction", e);
+            }
             connectionPool.putBack(con);
         }
 

@@ -28,12 +28,12 @@ public class CurrencyDAO {
         Connection con = connectionPool.retrieve();
 
         try (PreparedStatement stmt = con.prepareStatement(SHOW_CURRENCY_LIST_SQL_QUERY)) {
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Currency currency = new Currency();
-                setParametersToCurrency(currency, rs);
-                currencyList.add(currency);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Currency currency = new Currency();
+                    setParametersToCurrency(currency, rs);
+                    currencyList.add(currency);
+                }
             }
         } catch (SQLException e) {
             LOGGER.error("The exception was occurred when trying to get ArrayList with all user's currencies", e);
